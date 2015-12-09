@@ -24,6 +24,6 @@ SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 add_library(system_copyfile SHARED ${copyfile_sources})
-target_link_libraries(system_copyfile system_kernel system_c)
+target_link_libraries(system_copyfile system_kernel system_c system_blocks)
 
 install(TARGETS system_copyfile DESTINATION lib${SUFFIX}/darling)

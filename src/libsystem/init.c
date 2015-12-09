@@ -46,7 +46,7 @@ extern void __keymgr_initializer(void);		// from libkeymgr.a
 extern void _dyld_initializer(void);		// from libdyld.a
 extern void libdispatch_init(void);		// from libdispatch.a
 extern void _libxpc_initializer(void);		// from libxpc
-extern void __objc_initialize(void);
+extern void _objc_init(void);
 
 // signal malloc stack logging that initialisation has finished
 extern void __stack_logging_early_finished(void); // form libsystem_c.dylib
@@ -141,7 +141,9 @@ void libSystem_initializer(/*int argc, const char* argv[], const char* envp[], c
 	 * to zero by any library function."
 	 */
 	errno = 0;
-	__objc_initialize();
+#ifndef __i386__
+	// _objc_init();
+#endif
 }
 
 /*

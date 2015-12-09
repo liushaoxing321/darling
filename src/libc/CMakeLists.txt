@@ -39,6 +39,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/NetBSD")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/stdtime/FreeBSD")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../external/libdispatch")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../external/libdispatch/private")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../libclosure")
 
 add_subdirectory(db) # produces libc-db
 add_subdirectory(compat-43) # produces libc-compat

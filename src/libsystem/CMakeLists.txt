@@ -39,8 +39,12 @@ SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 add_library(system SHARED ${libsystem_sources})
 target_link_libraries(system PRIVATE dyld)
 target_link_libraries(system PUBLIC system_malloc system_c system_kernel keymgr
-	system_m system_info system_notify libdispatch_shared objc launch
+	system_m system_info system_notify libdispatch_shared system_blocks launch
 	removefile system_copyfile unwind)
+
+#if (BITS EQUAL 64)
+#	target_link_libraries(system PRIVATE objc)
+#endif (BITS EQUAL 64)
 
 install(TARGETS system DESTINATION lib${SUFFIX}/darling)
 

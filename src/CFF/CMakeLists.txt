@@ -14,11 +14,19 @@ add_definitions(-DHAVE_STDINT_H=1)
 add_definitions(-D__APPLE__ -D__DYNAMIC__)
 add_definitions(-D__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__=1080)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nostdinc -D__DARWIN_UNIX03 -fPIC -w -fconstant-string-class=NSConstantString -fobjc-nonfragile-abi -ggdb -O0")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nostdinc -D__DARWIN_UNIX03 -fPIC -w -fconstant-string-class=NSConstantString -ggdb -O0")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -nostdinc -nostdinc++ -D__DARWIN_UNIX03 -fPIC -w -fconstant-string-class=NSConstantString -fobjc-nonfragile-abi -ggdb -O0")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -nostdinc -nostdinc++ -D__DARWIN_UNIX03 -fPIC -w -fconstant-string-class=NSConstantString -ggdb -O0")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -nostdlib -Wl,--version-script=${DARLING_TOP_DIRECTORY}/darwin.map")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
+
+if(BITS EQUAL 64)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-nonfragile-abi -fobjc-runtime=macosx")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-nonfragile-abi -fobjc-runtime=macosx")
+else(BITS EQUAL 64)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-fragile-abi -fobjc-runtime=macosx-fragile-10.6")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-fragile-abi -fobjc-runtime=macosx-fragile-10.6")
+endif(BITS EQUAL 64)
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib${SUFFIX}/darling")
 SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
@@ -50,7 +58,7 @@ set(cffextra_SRCS
 
 add_library(CFF SHARED ${cff_SRCS})
 set_source_files_properties(${cff_SRCS} LANGUAGE C)
-target_link_libraries(CFF PRIVATE system icucore z ffi xml2 xslt "-Wl,--defsym=__CFConstantStringClassReference=_OBJC_CLASS_AppleCFString")
+target_link_libraries(CFF PRIVATE system icucore z ffi xml2 xslt objc "-Wl,--defsym=__CFConstantStringClassReference=OBJC_CLASS_$_AppleCFString")
 
 add_library(CFFExtra SHARED ${cffextra_SRCS})
 target_link_libraries(CFFExtra CFF cxx)
