@@ -169,3 +169,6 @@
 [submodule "src/external/top"]
 	path = src/external/top
 	url = ../darling-top.git
+[submodule "src/external/cctools-port"]
+	path = src/external/cctools-port
+	url = ../cctools-port.git
